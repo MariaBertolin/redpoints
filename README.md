@@ -44,18 +44,18 @@ Paràmetres a ajustar: Threshold de la Logistic Regression, Threshold de similar
 val   0.873171   0.911650  0.944130  0.927605  0.370861
 test  0.879190   0.918513  0.943136  0.930661  0.365565
 
-## Funcionament
-# Creació entorn virual dins del projecte
+# Funcionament
+## Creació entorn virual dins del projecte
 'python3 -m venv .venv'
 
 'source .venv/bin/activate'
 
 'pip install -r requirements.txt'
 
-# Execució
+## Execució
 python src/main.py --run_stage1 --run_similarity --run_stage2
 
-## API Usage
+# API Usage
 
 No he fet mai cap API i no he tingut temps per fer-la, així que lo següent s'ha d'agafar amb pinces:
 
@@ -72,4 +72,5 @@ Start server:
 'uvicorn api.main:app --reload'
 
 Available at: 
+
 http://127.0.0.1:8000/docs
