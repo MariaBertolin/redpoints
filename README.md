@@ -71,9 +71,10 @@ The API provides endpoints to run the full asset-detection pipeline and query pr
 All results are stored in a persistent SQLite database (`analysis.db`) to ensure they remain available across API restarts.
 
 Start server:
-'uvicorn api.main:app --reload'
+`uvicorn api.main:app --reload`
 
 Available at: 
 
 http://127.0.0.1:8000/docs
+
 
