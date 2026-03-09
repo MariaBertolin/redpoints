@@ -3,6 +3,7 @@ import sys
 import pandas as pd
 #import numpy as np
 #import matplotlib.pyplot as plt
+import joblib, os
 
 from dataset import MyDataset
 from stages.stage1 import MyStage1Model
@@ -36,7 +37,7 @@ def main():
         print(f"  train: {len(X_train)} | val: {len(X_val)} | test: {len(X_test)}")
 
         ## STAGE 1
-        if args.run_stage1:
+        if args.run_stage1 or args.run_stage2:
             print("\n=== Stage1 results ===")
             stage1 = MyStage1Model(args.max_iter, args.stage1_threshold)
             stage1.fit(list(X_train), list(y_train))
@@ -55,7 +56,11 @@ def main():
             
             metrics_df = pd.DataFrame([val_m, test_m], index=["val", "test"])
             print(metrics_df)
-        
+            
+            # guardar model entrenat
+            os.makedirs("models", exist_ok=True)
+            joblib.dump(stage1, "models/stage1.joblib")
+
         ## SIMILARITY
         if args.run_similarity:
             print("\n=== Similarity analysis ===")
@@ -118,7 +123,9 @@ def main():
                 sim_threshold=args.stage2_sim_threshold
             )
             stage2.fit(list(X_train_s2), list(y_train_s2))
-
+            # guardar model entrenat
+            os.makedirs("models", exist_ok=True)
+            joblib.dump(stage2, "models/stage2.joblib")
             # VAL
             if len(X_val_s2) > 0:
                 y_val_true_s2 = binarize_stage2(y_val_s2)

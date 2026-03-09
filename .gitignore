@@ -1,4 +1,7 @@
 .venv/
 __pycache__/
-mlengineer_task.pdf
 *.pyc
+*.joblib
+outputs/
+*:Zone.Identifier
+*.pdf

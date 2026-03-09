@@ -1,6 +1,9 @@
 # REDPOINTS: TECHNICAL CHALLENGE
+"Context: You are joining a brand protection platform that monitors online marketplaces for counterfeit product listings. One of the core problems we solve is detecting listings that are suspiciously similar to protected brand references — sellers often slightly alter product titles to avoid exact-match detection"
 
 ## STAGE 1
+Classificar d'una llista de títols en:
+    - No producte: ASSET_DISCARDED    
 Classificar d'una llista de títols en:
     - No producte: ASSET_DISCARDED    
     - Producte: La resta
@@ -12,7 +15,10 @@ Proposta: Classificació binaria amb una regressió logística. Es podria utilit
 El threshold del LR es fixa prioritzant el recall, així que com millor Recall millor performance. 
 Volem prioritzar els falsos positius perquè perdre un asset faria que no es pogués evaluar una potencial infracció en el stage2.
 
+Seria interessant millorar-ho afegint correlacions semàntiques.
+
 Paràmetres a ajustar: Threshold  i iteracions de la LR (podrien haver-hi més però ho he deixat lo més simple possible)
+
 
 **=== Stage1 results ===**
 | split | accuracy | precision | recall | f1 | loss |
@@ -22,16 +28,21 @@ Paràmetres a ajustar: Threshold  i iteracions de la LR (podrien haver-hi més p
 
 ## SIMILARITY
 Donada una consulta (un títol), buscar top-k títols semblants
+Donada una consulta (un títol), buscar top-k títols semblants
 Més o menys mateixa estrategia que en el stage 1:
 - TF-IDF-> per vectoritzar amb certs pesos 
 - Cosine-similarity -> mesura similitud calculant el cosinus de l'angle entre dos vectors
 - Ranking dels top-k resultats més similars
+- Ranking dels top-k resultats més similars
 
 ## STAGE 2
 Donat un listing d'assets (passats per l'Stage 1), classificar els productes en:
+Donat un listing d'assets (passats per l'Stage 1), classificar els productes en:
 - No infracció: INFRINGEMENT_DISCARDED
 - Potencial infracció/Infracció: INFRINGEMENT_VALIDATED, INFRINGEMENT_CONFIRMED, ONFIRMATION_ON_HOLD, INFRINGEMENT_VERIFIED, CONFIRMATION_DISCARDED (Internament passarà a ser INFRINGEMENT_CONFIRMED)
+- Potencial infracció/Infracció: INFRINGEMENT_VALIDATED, INFRINGEMENT_CONFIRMED, ONFIRMATION_ON_HOLD, INFRINGEMENT_VERIFIED, CONFIRMATION_DISCARDED (Internament passarà a ser INFRINGEMENT_CONFIRMED)
 
+Proposta: Classificació binaria combinant regressió logística amb un senyal de similarity. Igual que al Stage1 utilitzo TF-IDF + LogisticRegression per simplicitat i velocitat. A més, afegeixo una comprovació de similitud amb listings positius coneguts per reforçar la detecció quan un títol és molt semblant a altres.
 Proposta: Classificació binaria combinant regressió logística amb un senyal de similarity. Igual que al Stage1 utilitzo TF-IDF + LogisticRegression per simplicitat i velocitat. A més, afegeixo una comprovació de similitud amb listings positius coneguts per reforçar la detecció quan un títol és molt semblant a altres.
 
 - TF-IDF -> per vectoritzar amb certs pesos
@@ -54,8 +65,14 @@ Paràmetres a ajustar: Threshold de la Logistic Regression, Threshold de similar
 
 `pip install -r requirements.txt`
 
-## Execució per veure la full performance
+## Execució avaluació
 `python src/main.py --run_stage1 --run_similarity --run_stage2`
+
+## Execució inference
+`python src/inference.py --input_file data/listing.csv`
+
+El fitxer d’entrada ha de ser un CSV on la primera columna contingui els títols dels listings (columna title).
+El script carregarà els models entrenats i retornarà una classificació final per cada fila (ASSET_DISCARDED, INFRINGEMENT_CONFIRMED o INFRINGEMENT_DISCARDED).
 
 # API Usage
 
@@ -72,8 +89,10 @@ All results are stored in a persistent SQLite database (`analysis.db`) to ensure
 
 Start server:
 `uvicorn api.main:app --reload`
+`uvicorn api.main:app --reload`
 
 Available at: 
+
 
 http://127.0.0.1:8000/docs
 
