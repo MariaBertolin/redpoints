@@ -5,10 +5,10 @@ import pandas as pd
 #import matplotlib.pyplot as plt
 
 from dataset import MyDataset
-from stage1 import MyStage1Model
-from stage2 import MyStage2Model
+from stages.stage1 import MyStage1Model
+from stages.stage2 import MyStage2Model
+from stages.similarity import find_similar_listings, build_reference_matrix
 from metrics import compute_metrics, evaluate_thresholds
-from similarity import find_similar_listings, build_reference_matrix
 from utils import binarize_stage1, binarize_stage2, build_vectorizer
 
 

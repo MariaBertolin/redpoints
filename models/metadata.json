@@ -1,0 +1,29 @@
+{
+  "model_paths": {
+    "stage1_model": "models/stage1.pkl",
+    "stage2_model": "models/stage2.pkl",
+    "reference_embeddings": "computed_in_memory_from_stage1_vectorizer"
+  },
+  "datasets": {
+    "stage1": {
+      "train": "data/reference_listing.csv",
+      "validation": "data/reference_listing.csv"
+    },
+    "stage2": {
+      "train": "not_available",
+      "validation": "not_available"
+    }
+  },
+  "metrics": {
+    "stage1": {
+      "precision": 1.0,
+      "recall": 0.9592245989304813,
+      "f1": 0.9791879904469465
+    },
+    "stage2": {
+      "precision": null,
+      "recall": null,
+      "f1": null
+    }
+  }
+}

@@ -1,3 +1,4 @@
-mlengineer_task_old.pdf
-mlengineer_task.pdf
 .venv/
+__pycache__/
+mlengineer_task.pdf
+*.pyc
