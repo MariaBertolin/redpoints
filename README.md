@@ -3,7 +3,7 @@
 
 ## STAGE 1
 Classificar d'una llista de títols en:
-    - No producte: ASSET_DISCARDED    
+    - No producte: ASSET_DISCARDED
     - Producte: La resta
 
 Proposta: Classificació binaria amb una regressió logística. Es podria utilitzar mBERT, però per limitacions de computació he optat per lo més lleuger possible. Així que utilitzaré TF-IDF+LogisticRegression (LR), més simple. 
@@ -88,6 +88,7 @@ Available at:
 
 
 http://127.0.0.1:8000/docs
+
 
 
 
