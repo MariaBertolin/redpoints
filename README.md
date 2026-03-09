@@ -4,8 +4,6 @@
 ## STAGE 1
 Classificar d'una llista de títols en:
     - No producte: ASSET_DISCARDED    
-Classificar d'una llista de títols en:
-    - No producte: ASSET_DISCARDED    
     - Producte: La resta
 
 Proposta: Classificació binaria amb una regressió logística. Es podria utilitzar mBERT, però per limitacions de computació he optat per lo més lleuger possible. Així que utilitzaré TF-IDF+LogisticRegression (LR), més simple. 
@@ -27,22 +25,17 @@ Paràmetres a ajustar: Threshold  i iteracions de la LR (podrien haver-hi més p
 | test | 0.913333 | 0.915503  | 0.993182 | 0.952762 | 0.346016 |
 
 ## SIMILARITY
-Donada una consulta (un títol), buscar top-k títols semblants
-Donada una consulta (un títol), buscar top-k títols semblants
+Donada una consulta (un títol), buscar top-k títols semblants.
 Més o menys mateixa estrategia que en el stage 1:
 - TF-IDF-> per vectoritzar amb certs pesos 
 - Cosine-similarity -> mesura similitud calculant el cosinus de l'angle entre dos vectors
 - Ranking dels top-k resultats més similars
-- Ranking dels top-k resultats més similars
 
 ## STAGE 2
 Donat un listing d'assets (passats per l'Stage 1), classificar els productes en:
-Donat un listing d'assets (passats per l'Stage 1), classificar els productes en:
 - No infracció: INFRINGEMENT_DISCARDED
 - Potencial infracció/Infracció: INFRINGEMENT_VALIDATED, INFRINGEMENT_CONFIRMED, ONFIRMATION_ON_HOLD, INFRINGEMENT_VERIFIED, CONFIRMATION_DISCARDED (Internament passarà a ser INFRINGEMENT_CONFIRMED)
-- Potencial infracció/Infracció: INFRINGEMENT_VALIDATED, INFRINGEMENT_CONFIRMED, ONFIRMATION_ON_HOLD, INFRINGEMENT_VERIFIED, CONFIRMATION_DISCARDED (Internament passarà a ser INFRINGEMENT_CONFIRMED)
 
-Proposta: Classificació binaria combinant regressió logística amb un senyal de similarity. Igual que al Stage1 utilitzo TF-IDF + LogisticRegression per simplicitat i velocitat. A més, afegeixo una comprovació de similitud amb listings positius coneguts per reforçar la detecció quan un títol és molt semblant a altres.
 Proposta: Classificació binaria combinant regressió logística amb un senyal de similarity. Igual que al Stage1 utilitzo TF-IDF + LogisticRegression per simplicitat i velocitat. A més, afegeixo una comprovació de similitud amb listings positius coneguts per reforçar la detecció quan un títol és molt semblant a altres.
 
 - TF-IDF -> per vectoritzar amb certs pesos
@@ -95,5 +88,6 @@ Available at:
 
 
 http://127.0.0.1:8000/docs
+
 
 
