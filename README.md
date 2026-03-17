@@ -1,4 +1,4 @@
-# REDPOINTS: TECHNICAL CHALLENGE
+# COUNTERFEIT DETECTION - TECHNICAL CHALLENGE
 "Context: You are joining a brand protection platform that monitors online marketplaces for counterfeit product listings. One of the core problems we solve is detecting listings that are suspiciously similar to protected brand references — sellers often slightly alter product titles to avoid exact-match detection"
 
 ## STAGE 1
